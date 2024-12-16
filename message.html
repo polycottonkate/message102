@@ -120,25 +120,24 @@
         const letterContainer = document.getElementById('letterContainer');
 
         letterContainer.addEventListener('click', function() {
-            step++;
+            step = (step + 1) % 4;
             if (step === 1) {
                 document.getElementById('letterFront').classList.add('hidden');
-                createContentBox(content1, step);
+                createContentBox(content1);
             } else if (step === 2) {
                 removeContentBox();
-                createContentBox(content2, step);
+                createContentBox(content2);
             } else if (step === 3) {
                 removeContentBox();
-                createContentBox(content3, step);
-            } else if (step === 4) {
+                createContentBox(content3);
+            } else if (step === 0) {
                 removeContentBox();
                 document.getElementById('letterFront').classList.remove('hidden');
-                step = 0;
             }
             createSnowman(step); // Add one snowman on each click
         });
 
-        function createContentBox(content, step) {
+                function createContentBox(content, step) {
             const contentBox = document.createElement('div');
             contentBox.className = 'contentBox';
             contentBox.textContent = decodeURIComponent(content);
