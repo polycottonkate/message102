@@ -16,7 +16,7 @@
             background-image: url('cloud.png');
             background-repeat: no-repeat;
             background-position: center;
-            color: #2c3e50;
+            color: #D3D3D3;
             font-family: 'Dancing Script', cursive;
             margin: 0;
             overflow: hidden;
@@ -227,6 +227,19 @@
         }
 
         createSnowman(step); // Initial snowman
+
+        function createStars() {
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = `${Math.random() * window.innerWidth}px`;
+                star.style.top = `${Math.random() * window.innerHeight}px`;
+                document.body.appendChild(star);
+            }
+        }
+
+        createStars();
+
     </script>
 </body>
 </html>
