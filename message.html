@@ -41,14 +41,12 @@
             position: absolute;
             width: 60px;
             height: auto;
-            animation: fly 15s linear;
+            animation: fly 25s linear;
         }
         @keyframes fly {
-            0% { transform: translateX(-100vw) translateY(0); }
-            25% { transform: translateX(-75vw) translateY(15vh); }
-            50% { transform: translateX(-50vw) translateY(-15vh); }
-            75% { transform: translateX(-25vw) translateY(15vh); }
-            100% { transform: translateX(0) translateY(0); }
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translate(100vw, 0); opacity: 0; }
         }
         #letterFront {
             position: relative;
@@ -174,8 +172,9 @@
             snowman.src = 'https://static.vecteezy.com/system/resources/previews/021/829/295/non_2x/cute-small-snowman-with-hat-free-png.png';
             snowman.className = 'snowman';
             snowman.style.top = `${Math.random() * 100}vh`;
+            snowman.style.left = `${Math.random() * 100}vw`;
             document.body.appendChild(snowman);
-            setTimeout(() => { snowman.remove(); }, 15000); // Remove snowman after animation
+            setTimeout(() => { snowman.remove(); }, 25000); // Remove snowman after animation
         }
 
         createSnowman(); // Initial snowman
