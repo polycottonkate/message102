@@ -36,8 +36,9 @@
         }
         .container {
             position: relative;
+            width: 5cm;
+            height: 3cm;
             background: rgba(255, 255, 255, 0.8);
-            padding: 20px;
             border: 2px solid rgba(44, 62, 80, 0.8);
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(44, 62, 80, 0.5);
@@ -62,27 +63,27 @@
         }
         #letterFront {
             position: relative;
-            padding: 20px;
-            border: 2px solid #2c3e50;
-            border-radius: 10px;
+            padding: 10px;
             background: linear-gradient(45deg, #f2f2f2 25%, transparent 25%), linear-gradient(-45deg, #f2f2f2 25%, transparent 25%);
             background-size: 20px 20px;
         }
-        #letterFront p {
-            margin: 10px 0;
-        }
-        #fromText {
+        #letterFront:before, #letterFront:after {
+            content: '';
             position: absolute;
-            top: 10px;
-            left: 10px;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(44, 62, 80, 0.8);
+            border-radius: 10px;
+            transform: rotate(45deg);
+            top: -50%;
+            left: 0;
         }
-        #toText {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
+        #letterFront:after {
+            top: 50%;
         }
         .contentBox {
-            background: rgba(128, 128, 128, 0.5);
+            background: rgba(255, 255, 255, 0.8);
             padding: 20px;
             margin: 20px 0;
             border-radius: 10px;
