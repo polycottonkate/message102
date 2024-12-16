@@ -34,6 +34,22 @@
             50% { opacity: 1; }
             100% { opacity: 0.5; }
         }
+        @keyframes flyRight {
+            0% { transform: translateX(0); opacity: 1; }
+            100% { transform: translateX(100vw); opacity: 0; }
+        }
+        @keyframes flyDown {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+        @keyframes flyLeft {
+            0% { transform: translateX(0); opacity: 1; }
+            100% { transform: translateX(-100vw); opacity: 0; }
+        }
+        @keyframes flyUp {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
         .hidden {
             display: none;
         }
@@ -42,11 +58,6 @@
             width: 40px; /* Smaller size */
             height: auto;
             animation: fly 20s linear;
-        }
-        @keyframes fly {
-            0% { opacity: 0; }
-            10% { opacity: 1; }
-            100% { opacity: 0; transform: translate(100vw, 50vh); }
         }
         #letterFront {
             position: relative;
@@ -120,7 +131,7 @@
         const letterContainer = document.getElementById('letterContainer');
 
         letterContainer.addEventListener('click', function() {
-            step = (step + 1) % 4;
+            step++;
             if (step === 1) {
                 document.getElementById('letterFront').classList.add('hidden');
                 createContentBox(content1);
@@ -130,33 +141,38 @@
             } else if (step === 3) {
                 removeContentBox();
                 createContentBox(content3);
-            } else if (step === 0) {
+            } else if (step === 4) {
                 removeContentBox();
                 document.getElementById('letterFront').classList.remove('hidden');
+                step = 0;
             }
             createSnowman(step); // Add one snowman on each click
         });
 
-                function createContentBox(content, step) {
+        function createContentBox(content) {
             const contentBox = document.createElement('div');
             contentBox.className = 'contentBox';
             contentBox.textContent = decodeURIComponent(content);
             document.body.appendChild(contentBox);
             contentBox.addEventListener('click', function() {
-                step++;
-                if (step === 2) {
-                    removeContentBox();
-                    createContentBox(content2, step);
-                } else if (step === 3) {
-                    removeContentBox();
-                    createContentBox(content3, step);
-                } else if (step === 4) {
-                    removeContentBox();
-                    document.getElementById('letterFront').classList.remove('hidden');
-                    step = 0;
-                }
-                createSnowman(step); // Add one snowman on each click
+                handleNextStep();
             });
+        }
+
+        function handleNextStep() {
+            step++;
+            if (step === 2) {
+                removeContentBox();
+                createContentBox(content2);
+            } else if (step === 3) {
+                removeContentBox();
+                createContentBox(content3);
+            } else if (step === 4) {
+                removeContentBox();
+                document.getElementById('letterFront').classList.remove('hidden');
+                step = 0;
+            }
+            createSnowman(step); // Add one snowman on each click
         }
 
         function removeContentBox() {
@@ -175,22 +191,22 @@
                 case 1:
                     snowman.style.top = `${Math.random() * 100}vh`;
                     snowman.style.left = `0`;
-                    snowman.style.animationDirection = 'normal';
+                    snowman.style.animation = 'flyRight 20s linear';
                     break;
                 case 2:
                     snowman.style.top = `0`;
                     snowman.style.left = `${Math.random() * 100}vw`;
-                    snowman.style.animationDirection = 'normal';
+                    snowman.style.animation = 'flyDown 20s linear';
                     break;
                 case 3:
                     snowman.style.top = `${Math.random() * 100}vh`;
                     snowman.style.right = `0`;
-                    snowman.style.animationDirection = 'reverse';
+                    snowman.style.animation = 'flyLeft 20s linear';
                     break;
                 case 0:
                     snowman.style.bottom = `0`;
                     snowman.style.left = `${Math.random() * 100}vw`;
-                    snowman.style.animationDirection = 'reverse';
+                    snowman.style.animation = 'flyUp 20s linear';
                     break;
             }
 
