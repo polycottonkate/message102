@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Message</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400&display=swap');
@@ -39,14 +38,14 @@
         }
         .snowman {
             position: absolute;
-            width: 60px;
+            width: 40px; /* Smaller size */
             height: auto;
-            animation: fly 25s linear;
+            animation: fly 20s linear;
         }
         @keyframes fly {
             0% { opacity: 0; }
             10% { opacity: 1; }
-            100% { transform: translate(100vw, 0); opacity: 0; }
+            100% { transform: translate(100vw, 50vh); opacity: 0; }
         }
         #letterFront {
             position: relative;
@@ -143,21 +142,6 @@
             contentBox.className = 'contentBox';
             contentBox.textContent = decodeURIComponent(content);
             document.body.appendChild(contentBox);
-            contentBox.addEventListener('click', function() {
-                step++;
-                if (step === 2) {
-                    removeContentBox();
-                    createContentBox(content2);
-                } else if (step === 3) {
-                    removeContentBox();
-                    createContentBox(content3);
-                } else if (step === 4) {
-                    removeContentBox();
-                    document.getElementById('letterFront').classList.remove('hidden');
-                    step = 0;
-                }
-                createSnowman(); // Add one snowman on each click
-            });
         }
 
         function removeContentBox() {
@@ -174,7 +158,7 @@
             snowman.style.top = `${Math.random() * 100}vh`;
             snowman.style.left = `${Math.random() * 100}vw`;
             document.body.appendChild(snowman);
-            setTimeout(() => { snowman.remove(); }, 25000); // Remove snowman after animation
+            setTimeout(() => { snowman.remove(); }, 20000); // Remove snowman after animation
         }
 
         createSnowman(); // Initial snowman
