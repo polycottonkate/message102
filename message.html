@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Message</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400&display=swap');
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #bdc3c7;
+            background-image: url('cloud.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            color: #2c3e50;
+            font-family: 'Dancing Script', cursive;
+            margin: 0;
+            overflow: hidden;
+        }
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        .container {
+            position: relative;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border: 2px solid rgba(44, 62, 80, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(44, 62, 80, 0.5);
+            text-align: center;
+            cursor: pointer;
+        }
+        .hidden {
+            display: none;
+        }
+        .snowman {
+            position: absolute;
+            width: 60px;
+            height: auto;
+            animation: fly 15s linear infinite;
+        }
+        @keyframes fly {
+            0% { transform: translateX(-100vw) translateY(0); }
+            25% { transform: translateX(-75vw) translateY(15vh); }
+            50% { transform: translateX(-50vw) translateY(-15vh); }
+            75% { transform: translateX(-25vw) translateY(15vh); }
+            100% { transform: translateX(0) translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="letterContainer">
+        <div id="letterFront">
+            <p>From: <span id="fromText"></span></p>
+            <p>To: <span id="toText"></span></p>
+        </div>
+        <div id="content1" class="hidden"></div>
+        <div id="content2" class="hidden"></div>
+        <div id="content3" class="hidden"></div>
+    </div>
+
+    <script>
+        // Parse the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const from = urlParams.get('from');
+        const to = urlParams.get('to');
+        const content1 = urlParams.get('content1');
+        const content2 = urlParams.get('content2');
+        const content3 = urlParams.get('content3');
+
+        document.getElementById('fromText').textContent = decodeURIComponent(from);
+        document.getElementById('toText').textContent = decodeURIComponent(to);
+        document.getElementById('content1').textContent = decodeURIComponent(content1);
+        document.getElementById('content2').textContent = decodeURIComponent(content2);
+        document.getElementById('content3').textContent = decodeURIComponent(content3);
+
+        let step = 0;
+        const letterContainer = document.getElementById('letterContainer');
+
+        letterContainer.addEventListener('click', function() {
+            step++;
+            if (step === 1) {
+                document.getElementById('letterFront').classList.add('hidden');
+                document.getElementById('content1').classList.remove('hidden');
+            } else if (step === 2) {
+                document.getElementById('content1').classList.add('hidden');
+                document.getElementById('content2').classList.remove('hidden');
+            } else if (step === 3) {
+                document.getElementById('content2').classList.add('hidden');
+                document.getElementById('content3').classList.remove('hidden');
+            } else if (step === 4) {
+                document.getElementById('content3').classList.add('hidden');
+                document.getElementById('letterFront').classList.remove('hidden');
+                step = 0;
+            }
+        });
+
+        function createSnowman() {
+            const snowman = document.createElement('img');
+            snowman.src = 'https://static.vecteezy.com/system/resources/previews/021/829/295/non_2x/cute-small-snowman-with-hat-free-png.png';
+            snowman.className = 'snowman';
+            document.body.appendChild(snowman);
+        }
+
+        createSnowman();
+    </script>
+</body>
+</html>
+
