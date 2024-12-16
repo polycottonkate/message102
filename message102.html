@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400&display=swap');
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #bdc3c7;
+            background-image: url('cloud.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            color: #2c3e50;
+            font-family: 'Dancing Script', cursive;
+            margin: 0;
+            overflow: hidden;
+        }
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        .container {
+            position: relative;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border: 2px solid rgba(44, 62, 80, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(44, 62, 80, 0.5);
+            text-align: left;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: 100%;
+            min-height: 10px;
+            font-size: 1em;
+            resize: none;
+            overflow: hidden;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        textarea.short {
+            min-height: 10px;
+        }
+        button {
+            float: right;
+            margin-top: 3px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="infoForm">
+            <div class="input-group">
+                <label for="fromInput">From:</label>
+                <textarea id="fromInput" class="short" required></textarea>
+                <button type="button" id="nextBtn1">Next</button>
+            </div>
+            <div class="input-group hidden" id="toGroup">
+                <label for="toInput">To:</label>
+                <textarea id="toInput" class="short" required></textarea>
+                <button type="button" id="nextBtn2">Next</button>
+            </div>
+            <div class="input-group hidden" id="contentGroup1">
+                <label for="contentInput1">Content 1:</label>
+                <textarea id="contentInput1" required></textarea>
+                <button type="button" id="nextBtn3">Next</button>
+            </div>
+            <div class="input-group hidden" id="contentGroup2">
+                <label for="contentInput2">Content 2:</label>
+                <textarea id="contentInput2" required></textarea>
+                <button type="button" id="nextBtn4">Next</button>
+            </div>
+            <div class="input-group hidden" id="contentGroup3">
+                <label for="contentInput3">Content 3:</label>
+                <textarea id="contentInput3" required></textarea>
+                <button type="submit" id="submitBtn">Submit</button>
+            </div>
+        </form>
+        <a href="#" id="resultLink" class="hidden">Your message link</a>
+    </div>
+
+    <script>
+        const fromInput = document.getElementById('fromInput');
+        const toInput = document.getElementById('toInput');
+        const contentInput1 = document.getElementById('contentInput1');
+        const contentInput2 = document.getElementById('contentInput2');
+        const contentInput3 = document.getElementById('contentInput3');
+        const nextBtn1 = document.getElementById('nextBtn1');
+        const nextBtn2 = document.getElementById('nextBtn2');
+        const nextBtn3 = document.getElementById('nextBtn3');
+        const nextBtn4 = document.getElementById('nextBtn4');
+        const toGroup = document.getElementById('toGroup');
+        const contentGroup1 = document.getElementById('contentGroup1');
+        const contentGroup2 = document.getElementById('contentGroup2');
+        const contentGroup3 = document.getElementById('contentGroup3');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultLink = document.getElementById('resultLink');
+
+        nextBtn1.addEventListener('click', function() {
+            if (fromInput.value.trim() !== '') {
+                toGroup.classList.remove('hidden');
+                adjustHeight(toInput);
+            }
+        });
+
+        nextBtn2.addEventListener('click', function() {
+            if (toInput.value.trim() !== '') {
+                contentGroup1.classList.remove('hidden');
+                adjustHeight(contentInput1);
+            }
+        });
+
+        nextBtn3.addEventListener('click', function() {
+            if (contentInput1.value.trim() !== '') {
+                contentGroup2.classList.remove('hidden');
+                adjustHeight(contentInput2);
+            }
+        });
+
+        nextBtn4.addEventListener('click', function() {
+            if (contentInput2.value.trim() !== '') {
+                contentGroup3.classList.remove('hidden');
+                adjustHeight(contentInput3);
+            }
+        });
+
+        function adjustHeight(input) {
+            input.style.height = 'auto';
+            input.style.height = input.scrollHeight + 'px';
+        }
+
+        fromInput.addEventListener('input', function() { adjustHeight(this); });
+        toInput.addEventListener('input', function() { adjustHeight(this); });
+        contentInput1.addEventListener('input', function() { adjustHeight(this); });
+        contentInput2.addEventListener('input', function() { adjustHeight(this); });
+        contentInput3.addEventListener('input', function() { adjustHeight(this); });
+
+        document.getElementById('infoForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const from = fromInput.value.trim();
+            const to = toInput.value.trim();
+            const content1 = contentInput1.value.trim();
+            const content2 = contentInput2.value.trim();
+            const content3 = contentInput3.value.trim();
+            const link = `http://cottonkatesilk.com/message?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&content1=${encodeURIComponent(content1)}&content2=${encodeURIComponent(content2)}&content3=${encodeURIComponent(content3)}`;
+            resultLink.href = link;
+            resultLink.classList.remove('hidden');
+        });
+
+        function createStars() {
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = `${Math.random() * window.innerWidth}px`;
+                star.style.top = `${Math.random() * window.innerHeight}px`;
+                document.body.appendChild(star);
+            }
+        }
+
+        createStars();
+    </script>
+</body>
+</html>
+
+<!-- Message Page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400&display=swap');
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #bdc3c7;
+            background-image: url('cloud.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            color: #2c3e50;
+            font-family: 'Dancing Script', cursive;
+            margin: 0;
+            overflow: hidden;
+        }
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        .envelope {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(44, 62, 80, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(44, 62, 80, 0.5);
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .envelope::before, .envelope::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(44, 62, 80, 0.8);
+            border-radius: 10px;
+            transform: rotate(45deg);
+            top: -50%;
+            left: 0;
+        }
+        .envelope::after {
+            top: 50%;
+        }
+        .from {
+            position: absolute;
+            top: 5px; 
+            left: 10px;
+            width: 40px;
+            height: auto;
+            opacity: 0.7; 
+            filter: invert(65%) sepia(15%) saturate(200%) hue-rotate(180deg) brightness(100%); 
+            transform: translateY(10px); 
+        }
+        .to {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 50px;
+            height: auto;
+        }
+        .message {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #2c3e50;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(44, 62, 80, 0.5);
+            background-color: rgba(236, 240, 241, 0.8);
+            font-style: italic;
+            font-size: 1.5em;
+            animation: twinkle 1.5s infinite alternate;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.5; text-shadow: 0 0 10px #2c3e50; }
+            100% { opacity: 1; text-shadow: 0 0 20px #2c3e50; }
+        }
+        .snowman {
+            position: absolute;
+            width: 60px;
+            height: auto;
+            animation: fly 15s linear; 
+        }
+        @keyframes fly {
+            0% { transform: translateX(-100vw) translateY(0); } 
+            25% { transform: translateX(-75vw) translateY(15vh); }
+            50% { transform: translateX(-50vw) translateY(-15vh); }
+            75% { transform: translateX(-25vw) translateY(15vh); }
+            100% { transform: translateX(0vw) translateY(calc(50vh - 100px)); } 
+        }
+        .snowman-2 {
+            position: absolute;
+            width: 60px;
+            height: auto;
+            animation: fly-2 15s linear; 
+        }
+        @keyframes fly-2 {
+            0% { transform: translateX(100vw) translateY(0); } 
+            25% { transform: translateX(75vw) translateY(-15vh); }
+            50% { transform: translateX(50vw) translateY(15vh); }
+            75% { transform: translateX(25vw) translateY(-15vh); }
+            100% { transform: translateX(0vw) translateY(calc(50vh - 100px)); } 
+        }
+        .snowman-3 {
+            position: absolute;
+            width: 60px;
+            height: auto;
+            animation: fly-3 15s linear; 
+        }
+        @keyframes fly-3 {
+            0% { transform: translateX(0) translateY(-100vh); } 
+            25% { transform: translateX(15vw) translateY(-75vh); }
+            50% { transform: translateX(-15vw) translateY(-50vh); }
+            75% { transform: translateX(15vw) translateY(-25vh); }
+            100% { transform: translateX(calc(50vw - 25px)) translateY(0); } 
+        }
+        .snowman-4 {
+            position: absolute;
+            width: 60px;
+            height: auto;
+            animation: fly-4 15s linear; 
+        }
+        @keyframes fly-4 {
+            0% { transform: translateX(0) translateY(100vh); } 
+            25% { transform: translateX(-15vw) translateY(75vh); }
+            50% { transform: translateX(15vw) translateY(50vh); }
+            75% { transform: translateX(-15vw) translateY(25vh); }
+            100% { transform: translateX(calc(50vw - 25px)) translateY(0); } 
+        }
+    </style>
+</head>
+</html>
