@@ -145,6 +145,21 @@
             contentBox.className = 'contentBox';
             contentBox.textContent = decodeURIComponent(content);
             document.body.appendChild(contentBox);
+            contentBox.addEventListener('click', function() {
+                step++;
+                if (step === 2) {
+                    removeContentBox();
+                    createContentBox(content2);
+                } else if (step === 3) {
+                    removeContentBox();
+                    createContentBox(content3);
+                } else if (step === 4) {
+                    removeContentBox();
+                    document.getElementById('letterFront').classList.remove('hidden');
+                    step = 0;
+                }
+                createSnowman(); // Add one snowman on each click
+            });
         }
 
         function removeContentBox() {
