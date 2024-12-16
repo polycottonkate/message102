@@ -77,18 +77,7 @@
             width: 50px;
             height: auto;
         }
-        .message {
-            display: none;
-            text-align: center;
-            padding: 20px;
-            border: 2px solid #2c3e50;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(44, 62, 80, 0.5);
-            background-color: rgba(236, 240, 241, 0.8);
-            font-style: italic;
-            font-size: 1.5em;
-            animation: twinkle 1.5s infinite alternate;
-        }
+        
         @keyframes twinkle {
             0% { opacity: 0.5; text-shadow: 0 0 10px #2c3e50; }
             100% { opacity: 1; text-shadow: 0 0 20px #2c3e50; }
@@ -148,7 +137,7 @@
     </style>
 </head>
 <body>
-    <div class="container" id="letterContainer">
+    <div class="envelope" id="letterenvelope">
         <div id="letterFront">
             <p>From: <span id="fromText"></span></p>
             <p>To: <span id="toText"></span></p>
@@ -174,9 +163,9 @@
         document.getElementById('content3').textContent = decodeURIComponent(content3);
 
         let step = 0;
-        const letterContainer = document.getElementById('letterContainer');
+        const letterenvelope = document.getElementById('letterenvelope');
 
-        letterContainer.addEventListener('click', function() {
+        letterenvelope.addEventListener('click', function() {
             step++;
             if (step === 1) {
                 document.getElementById('letterFront').classList.add('hidden');
