@@ -50,7 +50,7 @@
         }
         .snowman {
             position: absolute;
-            width: 60px;
+            width: 50px;
             height: auto;
             animation: fly 15s linear;
         }
@@ -63,9 +63,15 @@
         }
         #letterFront {
             position: relative;
-            padding: 10px;
-            background: linear-gradient(45deg, #f2f2f2 25%, transparent 25%), linear-gradient(-45deg, #f2f2f2 25%, transparent 25%);
-            background-size: 20px 20px;
+            width: 300px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(44, 62, 80, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(44, 62, 80, 0.5);
+            cursor: pointer;
+            overflow: hidden;
+
         }
         #letterFront:before, #letterFront:after {
             content: '';
@@ -83,11 +89,16 @@
             top: 50%;
         }
         .contentBox {
-            background: rgba(255, 255, 255, 0.8);
+            display: none;
+            text-align: center;
             padding: 20px;
-            margin: 20px 0;
+            border: 2px solid #2c3e50;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 20px rgba(44, 62, 80, 0.5);
+            background-color: rgba(236, 240, 241, 0.8);
+            font-style: italic;
+            font-size: 1.5em;
+            animation: twinkle 1.5s infinite alternate;
         }
     </style>
 </head>
@@ -139,13 +150,17 @@
             createSnowman(); // Add one snowman on each click
         });
 
-        function createSnowman() {
+        function createsnowman() {
             const snowman = document.createElement('img');
+            const directions = ['snowman', 'snowman-2', 'snowman-3', 'snowman-4'];
+            const direction = directions[Math.floor(Math.random() * directions.length)];
             snowman.src = 'https://static.vecteezy.com/system/resources/previews/021/829/295/non_2x/cute-small-snowman-with-hat-free-png.png';
-            snowman.className = 'snowman';
-            snowman.style.top = `${Math.random() * 100}vh`;
+            snowman.className = direction;
             document.body.appendChild(snowman);
-            setTimeout(() => { snowman.remove(); }, 15000); // Remove snowman after animation
+
+            setTimeout(() => {
+                snowman.remove();
+            }, 10000); 
         }
 
         createSnowman(); // Initial snowman
