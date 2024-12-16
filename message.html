@@ -36,29 +36,13 @@
         }
         .container {
             position: relative;
-            width: 300px;
-            height: 200px;
             background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
             border: 2px solid rgba(44, 62, 80, 0.8);
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(44, 62, 80, 0.5);
+            text-align: center;
             cursor: pointer;
-            overflow: hidden;
-        }
-        .container::before, .container::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            border: 2px solid rgba(44, 62, 80, 0.8);
-            border-radius: 10px;
-            transform: rotate(45deg);
-            top: -50%;
-            left: 0;
-        }
-        .container::after {
-            top: 50%;
         }
         .hidden {
             display: none;
@@ -67,7 +51,7 @@
             position: absolute;
             width: 60px;
             height: auto;
-            animation: fly 15s linear infinite;
+            animation: fly 15s linear;
         }
         @keyframes fly {
             0% { transform: translateX(-100vw) translateY(0); }
@@ -97,6 +81,13 @@
             bottom: 10px;
             right: 10px;
         }
+        .contentBox {
+            background: rgba(128, 128, 128, 0.5);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -105,9 +96,9 @@
             <p>From: <span id="fromText"></span></p>
             <p>To: <span id="toText"></span></p>
         </div>
-        <div id="content1" class="hidden"></div>
-        <div id="content2" class="hidden"></div>
-        <div id="content3" class="hidden"></div>
+        <div id="content1" class="contentBox hidden"></div>
+        <div id="content2" class="contentBox hidden"></div>
+        <div id="content3" class="contentBox hidden"></div>
     </div>
 
     <script>
@@ -144,21 +135,19 @@
                 document.getElementById('letterFront').classList.remove('hidden');
                 step = 0;
             }
-            createSnowmen(); // Add more snowmen on each click
+            createSnowman(); // Add one snowman on each click
         });
 
-        function createSnowmen() {
-            for (let i = 0; i < 5; i++) { // Change the number for more/less snowmen
-                const snowman = document.createElement('img');
-                snowman.src = 'https://static.vecteezy.com/system/resources/previews/021/829/295/non_2x/cute-small-snowman-with-hat-free-png.png';
-                snowman.className = 'snowman';
-                snowman.style.top = `${Math.random() * 100}vh`;
-                document.body.appendChild(snowman);
-                setTimeout(() => { snowman.remove(); }, 15000); // Remove snowman after animation
-            }
+        function createSnowman() {
+            const snowman = document.createElement('img');
+            snowman.src = 'https://static.vecteezy.com/system/resources/previews/021/829/295/non_2x/cute-small-snowman-with-hat-free-png.png';
+            snowman.className = 'snowman';
+            snowman.style.top = `${Math.random() * 100}vh`;
+            document.body.appendChild(snowman);
+            setTimeout(() => { snowman.remove(); }, 15000); // Remove snowman after animation
         }
 
-        createSnowmen(); // Initial snowmen
+        createSnowman(); // Initial snowman
     </script>
 </body>
 </html>
