@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Message</title>
+    <title>Messages</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400&display=swap');
 
@@ -41,130 +41,143 @@
             border: 2px solid rgba(44, 62, 80, 0.8);
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(44, 62, 80, 0.5);
-            text-align: center;
-            cursor: pointer;
+            text-align: left;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: 100%;
+            min-height: 10px;
+            font-size: 1em;
+            resize: none;
+            overflow: hidden;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        textarea.short {
+            min-height: 10px;
+        }
+        button {
+            float: right;
+            margin-top: 3px;
         }
         .hidden {
             display: none;
         }
-        .snowman {
-            position: absolute;
-            width: 60px;
-            height: auto;
-            animation: fly 15s linear;
-        }
-        @keyframes fly {
-            0% { transform: translateX(-100vw) translateY(0); }
-            25% { transform: translateX(-75vw) translateY(15vh); }
-            50% { transform: translateX(-50vw) translateY(-15vh); }
-            75% { transform: translateX(-25vw) translateY(15vh); }
-            100% { transform: translateX(0) translateY(0); }
-        }
-        #letterFront {
-            position: relative;
-            width: 300px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.8);
-            border: 2px solid rgba(44, 62, 80, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(44, 62, 80, 0.5);
-            overflow: hidden;
-        }
-        #letterFront:before, #letterFront:after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            border: 2px solid rgba(44, 62, 80, 0.8);
-            border-radius: 10px;
-            transform: rotate(45deg);
-            top: -50%;
-            left: 0;
-        }
-        #letterFront:after {
-            top: 50%;
-        }
-        #fromText {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            color: black;
-        }
-        #toText {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            color: black;
-        }
     </style>
 </head>
 <body>
-    <div class="container" id="letterContainer">
-        <div id="letterFront">
-            <p id="fromText"></p>
-            <p id="toText"></p>
-        </div>
+    <div class="container">
+        <form id="infoForm">
+            <div class="input-group">
+                <label for="fromInput">From:</label>
+                <textarea id="fromInput" class="short" required></textarea>
+                <button type="button" id="nextBtn1">Next</button>
+            </div>
+            <div class="input-group hidden" id="toGroup">
+                <label for="toInput">To:</label>
+                <textarea id="toInput" class="short" required></textarea>
+                <button type="button" id="nextBtn2">Next</button>
+            </div>
+            <div class="input-group hidden" id="contentGroup1">
+                <label for="contentInput1">Content 1:</label>
+                <textarea id="contentInput1" required></textarea>
+                <button type="button" id="nextBtn3">Next</button>
+            </div>
+            <div class="input-group hidden" id="contentGroup2">
+                <label for="contentInput2">Content 2:</label>
+                <textarea id="contentInput2" required></textarea>
+                <button type="button" id="nextBtn4">Next</button>
+            </div>
+            <div class="input-group hidden" id="contentGroup3">
+                <label for="contentInput3">Content 3:</label>
+                <textarea id="contentInput3" required></textarea>
+                <button type="submit" id="submitBtn">Submit</button>
+            </div>
+        </form>
+        <a href="#" id="resultLink" class="hidden">Your message link</a>
     </div>
 
     <script>
-        // Parse the URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const from = urlParams.get('from');
-        const to = urlParams.get('to');
-        const content1 = urlParams.get('content1');
-        const content2 = urlParams.get('content2');
-        const content3 = urlParams.get('content3');
+        const fromInput = document.getElementById('fromInput');
+        const toInput = document.getElementById('toInput');
+        const contentInput1 = document.getElementById('contentInput1');
+        const contentInput2 = document.getElementById('contentInput2');
+        const contentInput3 = document.getElementById('contentInput3');
+        const nextBtn1 = document.getElementById('nextBtn1');
+        const nextBtn2 = document.getElementById('nextBtn2');
+        const nextBtn3 = document.getElementById('nextBtn3');
+        const nextBtn4 = document.getElementById('nextBtn4');
+        const toGroup = document.getElementById('toGroup');
+        const contentGroup1 = document.getElementById('contentGroup1');
+        const contentGroup2 = document.getElementById('contentGroup2');
+        const contentGroup3 = document.getElementById('contentGroup3');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultLink = document.getElementById('resultLink');
 
-        document.getElementById('fromText').textContent = 'From: ' + decodeURIComponent(from);
-        document.getElementById('toText').textContent = 'To: ' + decodeURIComponent(to);
-
-        let step = 0;
-        const letterContainer = document.getElementById('letterContainer');
-
-        letterContainer.addEventListener('click', function() {
-            step++;
-            if (step === 1) {
-                document.getElementById('letterFront').classList.add('hidden');
-                createContentBox(content1);
-            } else if (step === 2) {
-                removeContentBox();
-                createContentBox(content2);
-            } else if (step === 3) {
-                removeContentBox();
-                createContentBox(content3);
-            } else if (step === 4) {
-                removeContentBox();
-                document.getElementById('letterFront').classList.remove('hidden');
-                step = 0;
+        nextBtn1.addEventListener('click', function() {
+            if (fromInput.value.trim() !== '') {
+                toGroup.classList.remove('hidden');
+                adjustHeight(toInput);
             }
-            createSnowman(); // Add one snowman on each click
         });
 
-        function createContentBox(content) {
-            const contentBox = document.createElement('div');
-            contentBox.className = 'contentBox';
-            contentBox.textContent = decodeURIComponent(content);
-            document.body.appendChild(contentBox);
+        nextBtn2.addEventListener('click', function() {
+            if (toInput.value.trim() !== '') {
+                contentGroup1.classList.remove('hidden');
+                adjustHeight(contentInput1);
+            }
+        });
+
+        nextBtn3.addEventListener('click', function() {
+            if (contentInput1.value.trim() !== '') {
+                contentGroup2.classList.remove('hidden');
+                adjustHeight(contentInput2);
+            }
+        });
+
+        nextBtn4.addEventListener('click', function() {
+            if (contentInput2.value.trim() !== '') {
+                contentGroup3.classList.remove('hidden');
+                adjustHeight(contentInput3);
+            }
+        });
+
+        function adjustHeight(input) {
+            input.style.height = 'auto';
+            input.style.height = input.scrollHeight + 'px';
         }
 
-        function removeContentBox() {
-            const contentBox = document.querySelector('.contentBox');
-            if (contentBox) {
-                contentBox.remove();
+        fromInput.addEventListener('input', function() { adjustHeight(this); });
+        toInput.addEventListener('input', function() { adjustHeight(this); });
+        contentInput1.addEventListener('input', function() { adjustHeight(this); });
+        contentInput2.addEventListener('input', function() { adjustHeight(this); });
+        contentInput3.addEventListener('input', function() { adjustHeight(this); });
+
+        document.getElementById('infoForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const from = fromInput.value.trim();
+            const to = toInput.value.trim();
+            const content1 = contentInput1.value.trim();
+            const content2 = contentInput2.value.trim();
+            const content3 = contentInput3.value.trim();
+            const link = `https://polycottonkate.github.io/message102/message?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&content1=${encodeURIComponent(content1)}&content2=${encodeURIComponent(content2)}&content3=${encodeURIComponent(content3)}`;
+            resultLink.href = link;
+            resultLink.classList.remove('hidden');
+        });
+
+        function createStars() {
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = `${Math.random() * window.innerWidth}px`;
+                star.style.top = `${Math.random() * window.innerHeight}px`;
+                document.body.appendChild(star);
             }
         }
 
-        function createSnowman() {
-            const snowman = document.createElement('img');
-            snowman.src = 'https://static.vecteezy.com/system/resources/previews/021/829/295/non_2x/cute-small-snowman-with-hat-free-png.png';
-            snowman.className = 'snowman';
-            snowman.style.top = `${Math.random() * 100}vh`;
-            document.body.appendChild(snowman);
-            setTimeout(() => { snowman.remove(); }, 15000); // Remove snowman after animation
-        }
-
-        createSnowman(); // Initial snowman
+        createStars();
     </script>
 </body>
 </html>
