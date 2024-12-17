@@ -138,8 +138,16 @@ if (encodedParams) {
     document.getElementById('fromText').textContent = 'From: ' + decodeURIComponent(from);
     document.getElementById('toText').textContent = 'To: ' + decodeURIComponent(to);
 
-    // Use the decoded content1, content2, and content3 as needed
+    // Display the decoded content
+    const contentContainer = document.createElement('div');
+    contentContainer.innerHTML = `
+        <p>${decodeURIComponent(content1)}</p>
+        <p>${decodeURIComponent(content2)}</p>
+        <p>${decodeURIComponent(content3)}</p>
+    `;
+    document.body.appendChild(contentContainer);
 }
+
 
 
         document.getElementById('fromText').textContent = 'From: ' + decodeURIComponent(from);
