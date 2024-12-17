@@ -128,27 +128,13 @@
     </div>
 
     <script>
-        // Decode the URL parameters
-const urlParams = new URLSearchParams(window.location.search);
-const encodedParams = urlParams.get('params');
-
-if (encodedParams) {
-    const [from, to, content1, content2, content3] = atob(encodedParams).split('|');
-
-    document.getElementById('fromText').textContent = 'From: ' + decodeURIComponent(from);
-    document.getElementById('toText').textContent = 'To: ' + decodeURIComponent(to);
-
-    // Display the decoded content
-    const contentContainer = document.createElement('div');
-    contentContainer.innerHTML = `
-        <p>${decodeURIComponent(content1)}</p>
-        <p>${decodeURIComponent(content2)}</p>
-        <p>${decodeURIComponent(content3)}</p>
-    `;
-    document.body.appendChild(contentContainer);
-}
-
-
+        // Parse the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const from = urlParams.get('from');
+        const to = urlParams.get('to');
+        const content1 = urlParams.get('content1');
+        const content2 = urlParams.get('content2');
+        const content3 = urlParams.get('content3');
 
         document.getElementById('fromText').textContent = 'From: ' + decodeURIComponent(from);
         document.getElementById('toText').textContent = 'To: ' + decodeURIComponent(to);
