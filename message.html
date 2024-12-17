@@ -130,14 +130,14 @@
     <script>
         // Parse the URL parameters
         const urlParams = new URLSearchParams(window.location.search);
-        const from = urlParams.get('from');
-        const to = urlParams.get('to');
-        const content1 = urlParams.get('content1');
-        const content2 = urlParams.get('content2');
-        const content3 = urlParams.get('content3');
+        const from = decodeURIComponent(urlParams.get('from'));
+        const to = decodeURIComponent(urlParams.get('to'));
+        const content1 = decodeURIComponent(urlParams.get('content1'));
+        const content2 = decodeURIComponent(urlParams.get('content2'));
+        const content3 = decodeURIComponent(urlParams.get('content3'));
 
-        document.getElementById('fromText').textContent = 'From: ' + decodeURIComponent(from);
-        document.getElementById('toText').textContent = 'To: ' + decodeURIComponent(to);
+        document.getElementById('fromText').textContent = 'From: ' + from;
+        document.getElementById('toText').textContent = 'To: ' + to;
 
         let step = 0;
         const letterContainer = document.getElementById('letterContainer');
