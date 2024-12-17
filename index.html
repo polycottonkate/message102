@@ -52,7 +52,7 @@
         }
         .input-group {
             margin-bottom: 20px;
-            width: 80%; /* Adjust width for better centering */
+            width: 80%; 
         }
         textarea {
             width: 100%;
@@ -69,9 +69,9 @@
         button {
     float: right;
     margin-top: 2px;
-    background-color: #EEEEEE; /* Same color as the titles */
-    color: grey; /* Adjust the text color for contrast */
-    border: 1px solid #696969; /* Adding a border */
+    background-color: #EEEEEE; 
+    color: grey; 
+    border: 1px solid #696969; 
     padding: 5px 10px 2px 10px;
     border-radius: 5px;
     cursor: pointer;
@@ -79,7 +79,7 @@
 
 
 button:hover {
-    background-color: #EEEEEE; /* Slightly darker shade for hover effect */
+    background-color: #EEEEEE; 
 }
 
         .hidden {
@@ -176,21 +176,16 @@ button:hover {
         contentInput3.addEventListener('input', function() { adjustHeight(this); });
 
         document.getElementById('infoForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const from = encodeURIComponent(fromInput.value.trim());
-    const to = encodeURIComponent(toInput.value.trim());
-    const content1 = encodeURIComponent(contentInput1.value.trim());
-    const content2 = encodeURIComponent(contentInput2.value.trim());
-    const content3 = encodeURIComponent(contentInput3.value.trim());
-
-    const encodedParams = btoa(`${from}|${to}|${content1}|${content2}|${content3}`);
-    const link = `https://polycottonkate.github.io/message102/message?params=${encodedParams}`;
-
-    resultLink.href = link;
-    resultLink.textContent = "Your message link"; // Keeping the text as "Your message link"
-    resultLink.classList.remove('hidden');
-});
-
+            event.preventDefault();
+            const from = fromInput.value.trim();
+            const to = toInput.value.trim();
+            const content1 = contentInput1.value.trim();
+            const content2 = contentInput2.value.trim();
+            const content3 = contentInput3.value.trim();
+            const link = `https://polycottonkate.github.io/message102/message?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&content1=${encodeURIComponent(content1)}&content2=${encodeURIComponent(content2)}&content3=${encodeURIComponent(content3)}`;
+            resultLink.href = link;
+            resultLink.classList.remove('hidden');
+        });
 
         function createStars() {
             for (let i = 0; i < 100; i++) {
